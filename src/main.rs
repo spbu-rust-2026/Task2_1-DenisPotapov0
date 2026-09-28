@@ -3,8 +3,16 @@ fn main() {
     println!("{}", process(&mut string));
 }
 
-fn process(_text: &mut String) -> &str {
-    todo!("исправьте заимствования и реализуйте process");
+fn process(text: &mut String) -> &str {
+    let start = text
+        .find(|c: char| !c.is_whitespace())
+        .unwrap_or(text.len());
+    let end = match text[start..].find(char::is_whitespace) {
+        Some(offset) => start + offset,
+        None => text.len(),
+    };
+    text.push('!');
+    &text[start..end]
 }
 
 #[cfg(test)]
